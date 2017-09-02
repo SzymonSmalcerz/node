@@ -7,6 +7,8 @@ var express   =   require ("express"),
 
 var app = express();
 
+var port = process.env.PORT || 5000;
+
 var argv = yargs.option("address",{
   string: true,
   demand : true,
@@ -25,12 +27,17 @@ geocode.getLatitudeAndLongitude(argv.address, function(error, returnedAddress){
         console.log(error);
         return;
       }else{
-        console.log(returnedAddress.formattedAddress + " : " + JSON.stringify(returnedWeather));
+        console.log(returnedAddress.formattedAddress + " :  " + JSON.stringify(returnedWeather));
       }
     })
   }
 });
+
+
+app.get("*",function(req,res){
+  res.send("<h1>Hello world!</h1>");
+});
 //console.log(argv.address);
 //https://api.forecast.io/forecast/4a04d1c42fd9d32c97a2c291a32d5e2d/${lat},${lng}
 //https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}
-app.listen(5000,() => console.log("server is listening on port 5000"));
+app.listen(port,() => console.log("server is listening on port 5000"));
